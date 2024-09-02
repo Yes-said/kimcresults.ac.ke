@@ -27,7 +27,6 @@ export default function IndexPage() {
                 <table className="min-w-full bg-white border border-gray-200 divide-y divide-gray-300">
                     <thead>
                         <tr className="bg-gray-50">
-                            <th className="px-4 py-2 border">ID</th>
                             <th className="px-4 py-2 border">Name</th>
                             <th className="px-4 py-2 border">Title</th>
                             <th className="px-4 py-2 border">Department</th>
@@ -43,7 +42,6 @@ export default function IndexPage() {
                         {courses.length > 0 ? (
                             courses.map((course, index) => (
                                 <tr key={course.id} className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                                    <td className="px-4 py-2 border">{course.id}</td>
                                     <td className="px-4 py-2 border">{course.name}</td>
                                     <td className="px-4 py-2 border">{course.title}</td>
                                     <td className="px-4 py-2 border">{course.department}</td>
