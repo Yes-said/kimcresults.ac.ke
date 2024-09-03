@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
     const [name, setName] = useState('');
@@ -8,6 +8,7 @@ export default function RegisterPage() {
     const [password, setPassword] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const navigate = useNavigate(); // Initialize the navigate function
 
     async function registerUser(ev) {
         ev.preventDefault();
@@ -21,7 +22,8 @@ export default function RegisterPage() {
 
             setTimeout(() => {
                 setShowSuccessMessage(false);
-            }, 2000); // Hide the success message after 2 seconds
+                navigate('/login'); // Redirect to the login page after 2 seconds
+            }, 2000);
         } catch (e) {
             setShowErrorMessage(true);
 
@@ -61,7 +63,7 @@ export default function RegisterPage() {
                 </form>
                 {showSuccessMessage && (
                     <div className="mt-8 p-3 bg-green-500 text-white text-center rounded-md success-message">
-                        Registration successful! Now you can login.
+                        Registration successful! Redirecting to login page...
                     </div>
                 )}
                 {showErrorMessage && (
