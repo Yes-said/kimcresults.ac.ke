@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 export default function IndexPage() {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         axios.get("/courses")
@@ -13,12 +14,17 @@ export default function IndexPage() {
             })
             .catch((error) => {
                 console.error("Error fetching courses:", error);
+                setError("Failed to fetch courses.");
                 setLoading(false);
             });
     }, []);
 
     if (loading) {
         return <p>Loading courses...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
     }
 
     return (
@@ -40,8 +46,8 @@ export default function IndexPage() {
                     </thead>
                     <tbody>
                         {courses.length > 0 ? (
-                            courses.map((course, index) => (
-                                <tr key={course.id} className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                            courses.map((course) => (
+                                <tr key={course._id} className={courses.indexOf(course) % 2 === 0 ? "bg-gray-100" : ""}>
                                     <td className="px-4 py-2 border">{course.name}</td>
                                     <td className="px-4 py-2 border">{course.title}</td>
                                     <td className="px-4 py-2 border">{course.department}</td>
@@ -55,7 +61,7 @@ export default function IndexPage() {
                             ))
                         ) : (
                             <tr>
-                                <td className="px-4 py-2 border text-center" colSpan="10">No courses found</td>
+                                <td className="px-4 py-2 border text-center" colSpan="9">No courses found</td>
                             </tr>
                         )}
                     </tbody>
