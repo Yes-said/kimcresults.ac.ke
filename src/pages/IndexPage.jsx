@@ -40,7 +40,7 @@ export default function IndexPage() {
                     <thead>
                         <tr className="bg-gray-50">
                             <th className="px-4 py-2 border">Name</th>
-                            <th className="px-4 py-2 border">Title</th>
+                            <th className="px-4 py-2 border">CourseName</th>
                             <th className="px-4 py-2 border">Department</th>
                             <th className="px-4 py-2 border">Year</th>
                             <th className="px-4 py-2 border">Units</th>
@@ -55,7 +55,7 @@ export default function IndexPage() {
                             courses.map((course) => (
                                 <tr key={course._id} className={courses.indexOf(course) % 2 === 0 ? "bg-gray-100" : ""}>
                                     <td className="px-4 py-2 border">{course.name}</td>
-                                    <td className="px-4 py-2 border">{course.title}</td>
+                                    <td className="px-4 py-2 border">{course.courseName}</td>
                                     <td className="px-4 py-2 border">{course.department}</td>
                                     <td className="px-4 py-2 border">{course.year}</td>
                                     <td className="px-4 py-2 border">{course.units}</td>

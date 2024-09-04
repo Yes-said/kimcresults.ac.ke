@@ -6,7 +6,7 @@ import axios from "axios";
 export default function CoursesFormPage() {
   const {id} = useParams();
     const [name, setName] = useState("");
-    const [title, setTitle] = useState("");
+    const [courseName, setCourseName] = useState("");
     const [department, setDepartment] = useState("");
     const [year, setYear] = useState("");
     const [units, setUnits] = useState("");
@@ -22,7 +22,7 @@ export default function CoursesFormPage() {
    axios.get("/courses/"+id).then(response => {
 const {data} = response;
 setName(data.name);
-setTitle(data.title);
+setCourseName(data.courseName);
 setDepartment(data.department);
 setYear(data.year);
 setUnits(data.units);
@@ -58,7 +58,7 @@ setGender(data.gender);
  async function saveCourse(ev) {
 ev.preventDefault();
 const courseData = {
-  name,title,department,year,
+  name,courseName,department,year,
   units,phone,admission,
   unitsEnrolled,gender
 };
@@ -92,8 +92,8 @@ if (redirect) {
   <form onSubmit={saveCourse}>
     {PreInput("Name", "Write your name.")}
     <input value={name} onChange={ev => setName(ev.target.value)} type="text"placeholder="Enter your name"/>
-  {PreInput("Title", "Title for your course.")}
- <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="add name for your course e.g diploma in web and graphic design" />
+  {PreInput("CourseName", "Name for your course.")}
+ <input type="text" value={courseName} onChange={ev => setCourseName(ev.target.value)} placeholder="add name for your course e.g diploma in web and graphic design" />
  {PreInput("Department", "Department to which your course belongs.")}
  <input type="text" value={department} onChange={ev => setDepartment(ev.target.value)} placeholder="department e.g engineering" /> 
   
@@ -121,7 +121,7 @@ if (redirect) {
      <input value={gender} onChange={ev => setGender(ev.target.value)} type="text" placeholder="e.g male, female or other"/>
       </div>
      </div>
-    <button className="primary my-4">Save</button>
+     <button type="submit" className="primary my-4">Save</button>
      </form>
      </div>
     );
