@@ -95,9 +95,7 @@ if (redirect) {
   {PreInput("Title", "Title for your course.")}
  <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="add name for your course e.g diploma in web and graphic design" />
  {PreInput("Department", "Department to which your course belongs.")}
- <input type="text" value={department} onChange={ev => setDepartment(ev.target.value)} placeholder="department e.g engineering" />
- {PreInput("Photos", "More = better")}
- 
+ <input type="text" value={department} onChange={ev => setDepartment(ev.target.value)} placeholder="department e.g engineering" /> 
   
   {PreInput("Year", "Current year of your study")}
  <input type="number" value={year} onChange={ev => setYear(ev.target.value)} placeholder="e.g 1st, 2nd or 3rd"/>

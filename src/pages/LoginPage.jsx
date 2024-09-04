@@ -8,25 +8,51 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    const [showErrorMessage, setShowErrorMessage] = useState(false); // State for the error message
+    const [errorMessage, setErrorMessage] = useState(""); // State for error messages
     const { setUser } = useContext(UserContext);
+
+    // Function to validate email format
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Function to handle email validation on blur
+    function handleEmailBlur() {
+        if (!email) {
+            setErrorMessage("Email is required.");
+        } else if (!validateEmail(email)) {
+            setErrorMessage("Please enter a valid email address.");
+        } else {
+            setErrorMessage(""); // Clear error message if valid
+        }
+    }
+
+    // Function to handle password validation on blur
+    function handlePasswordBlur() {
+        if (!password) {
+            setErrorMessage("Password is required.");
+        } else if (password.length < 6) {
+            setErrorMessage("Password must be at least 6 characters long.");
+        } else {
+            setErrorMessage(""); // Clear error message if valid
+        }
+    }
 
     async function handleloginSubmit(ev) {
         ev.preventDefault();
+
         try {
             const { data } = await axios.post("/login", { email, password });
             setUser(data);
             setShowSuccessMessage(true);
+            setErrorMessage(""); // Clear any existing error messages
 
             setTimeout(() => {
                 setRedirect(true);
             }, 2000); // Wait for 2 seconds before redirecting
         } catch (e) {
-            setShowErrorMessage(true);
-
-            setTimeout(() => {
-                setShowErrorMessage(false);
-            }, 1500); // Hide the error message after 1.5 seconds
+            setErrorMessage("Login failed. Please check your email and password.");
         }
     }
 
@@ -44,12 +70,17 @@ export default function LoginPage() {
                         placeholder="your@gmail.com" 
                         value={email} 
                         onChange={ev => setEmail(ev.target.value)} 
+                        onBlur={handleEmailBlur}
+                        required
                     />
                     <input 
                         type="password" 
                         placeholder="password" 
                         value={password} 
                         onChange={ev => setPassword(ev.target.value)} 
+                        onBlur={handlePasswordBlur}
+                        minLength={6}
+                        required
                     />
                     <button className="primary">Login</button>
                     <div className="text-center py-2 text-gray-500">
@@ -61,9 +92,9 @@ export default function LoginPage() {
                         Login successful!
                     </div>
                 )}
-                {showErrorMessage && (
+                {errorMessage && (
                     <div className="mt-8 p-3 bg-red-500 text-white text-center rounded-md error-message">
-                        Login failed. Please try again.
+                        {errorMessage}
                     </div>
                 )}
             </div>

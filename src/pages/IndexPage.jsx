@@ -29,7 +29,13 @@ export default function IndexPage() {
 
     return (
         <>
-            <div className="overflow-x-auto mt-8">
+            {/* Banner */}
+            <div className="bg-blue-500 mt-8 text-white text-center py-4">
+                <h2 className="text-lg font-semibold">Students Enrolled</h2>
+            </div>
+
+            {/* Table */}
+            <div className="overflow-x-auto mt-4">
                 <table className="min-w-full bg-white border border-gray-200 divide-y divide-gray-300">
                     <thead>
                         <tr className="bg-gray-50">
@@ -40,7 +46,7 @@ export default function IndexPage() {
                             <th className="px-4 py-2 border">Units</th>
                             <th className="px-4 py-2 border">Phone</th>
                             <th className="px-4 py-2 border">Admission</th>
-                            <th className="px-4 py-2 border">UnitsEnrolled</th>
+                            <th className="px-4 py-2 border">Units Enrolled</th>
                             <th className="px-4 py-2 border">Gender</th>
                         </tr>
                     </thead>
