@@ -118,7 +118,7 @@ export default function RegisterPage() {
                 </form>
                 {showSuccessMessage && (
                     <div className="mt-8 p-3 bg-green-500 text-white text-center rounded-md success-message">
-                        Registration successful! Redirecting to login page...
+                        Registration successful!
                     </div>
                 )}
             </div>

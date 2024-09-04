@@ -45,6 +45,9 @@ if (redirect) {
 {subpage === "courses" && (
     <CoursesPage />
 )}
+
         </div>
     );
 }
+
+

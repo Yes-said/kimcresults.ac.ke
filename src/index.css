@@ -14,3 +14,26 @@ button {
 button.primary {
     @apply bg-blue-500 p-2 w-full text-white rounded-2xl;
 }
+
+
+
+
+
+/* Ensure the root element takes the full height of the viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  /* Ensure the root container stretches to fill the height */
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Ensure the content area grows to fill available space */
+  .main-content {
+    flex-grow: 1;
+  }
+  
