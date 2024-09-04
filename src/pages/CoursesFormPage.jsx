@@ -58,20 +58,21 @@ export default function CoursesFormPage() {
 
   function validateForm() {
     const newErrors = {};
-
-    if (!name.trim()) newErrors.name = "Name is required";
-    if (!courseName.trim()) newErrors.courseName = "Course name is required";
-    if (!department.trim()) newErrors.department = "Department is required";
+  
+    if (!String(name).trim()) newErrors.name = "Name is required";
+    if (!String(courseName).trim()) newErrors.courseName = "Course name is required";
+    if (!String(department).trim()) newErrors.department = "Department is required";
     if (!year || year < 1) newErrors.year = "Valid year is required";
-    if (!units.trim()) newErrors.units = "Units are required";
-    if (!phone.trim()) newErrors.phone = "Phone number is required";
-    if (!admission.trim()) newErrors.admission = "Admission number is required";
+    if (!String(units).trim()) newErrors.units = "Units are required";
+    if (!phone) newErrors.phone = "Phone number is required";
+    if (!admission) newErrors.admission = "Admission number is required";
     if (!unitsEnrolled || unitsEnrolled < 1) newErrors.unitsEnrolled = "Valid units enrolled is required";
-    if (!gender.trim()) newErrors.gender = "Gender is required";
-
+    if (!String(gender).trim()) newErrors.gender = "Gender is required";
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
+  
 
   async function saveCourse(ev) {
     ev.preventDefault();
