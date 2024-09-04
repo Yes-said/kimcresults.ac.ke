@@ -10,9 +10,9 @@
 }
 
 .success-message {
-    animation: slideUp 1.9s forwards;
+    animation: slideUp 10.5s forwards;
 }
 
 .error-message {
-    animation: slideUp 1.9s forwards;
+    animation: slideUp 10.5s forwards;
 }

@@ -52,7 +52,11 @@ export default function LoginPage() {
                 setRedirect(true);
             }, 2000); // Wait for 2 seconds before redirecting
         } catch (e) {
-            setErrorMessage("Login failed. Please check your email and password.");
+            if (e.response && e.response.status === 401) { // Assuming 401 is the status code for incorrect password
+                setErrorMessage("Incorrect password. Please try again later.");
+            } else {
+                setErrorMessage("Login failed. Please check your email and password.");
+            }
         }
     }
 
