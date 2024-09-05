@@ -36,7 +36,7 @@ export default function IndexPage() {
 
             {/* Table */}
             <div className="overflow-x-auto mt-4">
-                <table className="min-w-full bg-white mt-8 border border-gray-200 divide-y divide-gray-300">
+                <table className="min-w-full bg-white mt-8 mb-8 border border-gray-200 divide-y divide-gray-300">
                     <thead>
                         <tr className="bg-gray-50">
                             <th className="px-4 py-2 border">Name</th>
