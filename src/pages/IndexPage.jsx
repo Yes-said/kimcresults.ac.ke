@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import About from "./About";
 
 export default function IndexPage() {
     const [courses, setCourses] = useState([]);
@@ -73,6 +74,8 @@ export default function IndexPage() {
                     </tbody>
                 </table>
             </div>
+
+           <About />
         </>
     );
 }
