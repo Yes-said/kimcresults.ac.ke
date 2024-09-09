@@ -39,6 +39,16 @@ if (subpage === undefined) {
 
     My course
     </Link>
+
+    <Link className={linkClasses("students")} to={"/account/students"}>
+    Add results
+    </Link>
+
+    <Link className={linkClasses("student")} to={"/account/student"}>
+Results
+    </Link>
+
+   
 </nav>
     );
 }

@@ -4,6 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import CoursesPage from "./CoursesPage.jsx";
 import AccountNav from "../AccountNav.jsx";
+import Result from "./Result.jsx";
 
 export default function ProfilePage() {
     const [redirect, setRedirect] = useState(null);
@@ -41,10 +42,18 @@ if (redirect) {
         <button onClick={Logout} className="bg-blue-500 text-white mt-2 rounded-2xl px-8 py-1">Logout</button>
     </div>
 )}
+  {subpage === "courses" && user.role === 'student' && (
+                <CoursesPage />
+            )}
 
-{subpage === "courses" && (
-    <CoursesPage />
-)}
+{user.role === 'admin' && (
+                <div>
+                    <h2>Admin Controls</h2>
+                    {/* Admin specific content goes here */}
+                    <Result />
+                  
+                </div>
+            )}
 
         </div>
     );

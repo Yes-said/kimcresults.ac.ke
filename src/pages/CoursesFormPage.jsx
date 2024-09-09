@@ -196,6 +196,7 @@ export default function CoursesFormPage() {
         </div>
 
         <button type="submit" className="primary my-4">Save</button>
+
       </form>
     </div>
   );

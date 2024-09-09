@@ -9,7 +9,9 @@ import { UserContextProvider } from './UserContext.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
 import CoursesPage from './pages/CoursesPage.jsx'
 import CoursesFormPage from './pages/CoursesFormPage.jsx'
-import AccountNav from './AccountNav.jsx'
+import ResultsFormPage from './pages/ResultsFormPage.jsx'
+import Result from './pages/Result.jsx'
+import MyResults from './pages/MyResults.jsx'
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 function App() {
@@ -25,7 +27,9 @@ function App() {
     <Route path="/register" element={<RegisterPage/>} />
     <Route path="/account" element={<ProfilePage />} />
     <Route path="/account/courses" element={<CoursesPage />} />
-    <Route path="/account/results" element={<AccountNav />} />
+    <Route path="/account/students" element={<ResultsFormPage />} />
+    <Route path="/account/student" element={<Result />} />
+    <Route path="/account/results" element={<MyResults />} />
     <Route path="/account/courses/new" element={<CoursesFormPage/>} />
     <Route path="/account/courses/:id" element={<CoursesFormPage/>} />
 

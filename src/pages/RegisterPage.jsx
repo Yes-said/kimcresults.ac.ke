@@ -6,6 +6,7 @@ export default function RegisterPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('student'); // Default to student
     const [nameError, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -58,6 +59,7 @@ export default function RegisterPage() {
                 name,
                 email,
                 password,
+                role, // Send role with registration request
             });
             setShowSuccessMessage(true);
 
@@ -110,6 +112,10 @@ export default function RegisterPage() {
                         {passwordError && (
                             <div className="text-red-500 text-sm mt-1">{passwordError}</div>
                         )}
+                        <select value={role} onChange={ev => setRole(ev.target.value)} className="block w-full p-2 border border-gray-300 rounded-md">
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+            </select>
                     </div>
                     <button className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md transition-colors duration-200">Register</button>
                     <div className="text-center py-2 text-gray-500">

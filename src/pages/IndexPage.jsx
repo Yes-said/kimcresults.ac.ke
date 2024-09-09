@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import About from "./About";
+import ResultsFormPage from "./ResultsFormPage";
 
 export default function IndexPage() {
     const [courses, setCourses] = useState([]);
