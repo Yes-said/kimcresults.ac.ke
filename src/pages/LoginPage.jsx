@@ -6,6 +6,7 @@ import { UserContext } from "../UserContext";
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState("student"); // Default to student
     const [redirect, setRedirect] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(""); // State for error messages
@@ -39,11 +40,11 @@ export default function LoginPage() {
         }
     }
 
-    async function handleloginSubmit(ev) {
+    async function handleLoginSubmit(ev) {
         ev.preventDefault();
 
         try {
-            const { data } = await axios.post("/login", { email, password });
+            const { data } = await axios.post("/login", { email, password, role }); // Include role in login request
             setUser(data);
             setShowSuccessMessage(true);
             setErrorMessage(""); // Clear any existing error messages
@@ -52,10 +53,12 @@ export default function LoginPage() {
                 setRedirect(true);
             }, 2000); // Wait for 2 seconds before redirecting
         } catch (e) {
-            if (e.response && e.response.status === 401) { // Assuming 401 is the status code for incorrect password
+            if (e.response && e.response.status === 403) { // Handle role mismatch error
+                setErrorMessage("Permission denied. Please login with the correct role.");
+            } else if (e.response && e.response.status === 401) {
                 setErrorMessage("Incorrect password. Please try again later.");
             } else {
-                setErrorMessage("Login failed. Please check your email and password.");
+                setErrorMessage("Login failed. Please check your email, password, and role.");
             }
         }
     }
@@ -68,7 +71,7 @@ export default function LoginPage() {
         <div className="mt-4 grow flex items-center justify-around">
             <div className="mb-64">
                 <h1 className="text-4xl text-center mb-4">Login</h1>
-                <form className="max-w-md mx-auto" onSubmit={handleloginSubmit}>
+                <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
                     <input 
                         type="email" 
                         placeholder="your@gmail.com" 
@@ -86,7 +89,11 @@ export default function LoginPage() {
                         minLength={6}
                         required
                     />
-                    <button className="primary">Login</button>
+                    <select value={role} onChange={ev => setRole(ev.target.value)} className="block w-full p-2 border border-gray-300 rounded-md mt-4">
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <button className="primary mt-4">Login</button>
                     <div className="text-center py-2 text-gray-500">
                         Don't have an account yet? <Link className="underline text-black" to={"/register"}>Register now</Link>
                     </div>
