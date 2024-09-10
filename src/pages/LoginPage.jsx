@@ -42,18 +42,20 @@ export default function LoginPage() {
 
     async function handleLoginSubmit(ev) {
         ev.preventDefault();
-
+    
         try {
-            const { data } = await axios.post("/login", { email, password, role }); // Include role in login request
+            const { data } = await axios.post("/login", { email, password, role });
             setUser(data);
             setShowSuccessMessage(true);
             setErrorMessage(""); // Clear any existing error messages
-
+    
             setTimeout(() => {
                 setRedirect(true);
             }, 2000); // Wait for 2 seconds before redirecting
         } catch (e) {
-            if (e.response && e.response.status === 403) { // Handle role mismatch error
+            if (e.response && e.response.status === 404) {
+                setErrorMessage("Email does not exist.");
+            } else if (e.response && e.response.status === 403) {
                 setErrorMessage("Permission denied. Please login with the correct role.");
             } else if (e.response && e.response.status === 401) {
                 setErrorMessage("Incorrect password. Please try again later.");
@@ -62,6 +64,7 @@ export default function LoginPage() {
             }
         }
     }
+    
 
     if (redirect) {
         return <Navigate to={"/"} />;
@@ -95,6 +98,12 @@ export default function LoginPage() {
                     </select>
                     <button className="primary mt-4">Login</button>
                     <div className="text-center py-2 text-gray-500">
+                        <Link to={"/forgot-password"} className="underline text-black">
+                            Forgot Password?
+                        </Link>
+                    </div>
+
+                    <div className="text-center py-2 text-gray-500">
                         Don't have an account yet? <Link className="underline text-black" to={"/register"}>Register now</Link>
                     </div>
                 </form>
@@ -111,4 +120,4 @@ export default function LoginPage() {
             </div>
         </div>
     );
-}
+    }

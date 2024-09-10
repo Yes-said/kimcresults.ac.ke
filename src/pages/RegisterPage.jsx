@@ -80,7 +80,7 @@ export default function RegisterPage() {
                     <div className="mb-4">
                         <input 
                             type="text"
-                            placeholder="Martin Luther" 
+                            placeholder="Your full name" 
                             value={name}
                             onChange={ev => setName(ev.target.value)} 
                             className="block w-full p-2 border border-gray-300 rounded-md"
