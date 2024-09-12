@@ -26,7 +26,7 @@ export default function News() {
 
     return (
         <div className="news-section">
-            <h2 className="text-3xl font-bold text-center text-blue-900 mb-6">Latest News</h2>
+            <h2 className="text-3xl font-bold text-center text-blue-900 mb-6">Latest News & Events</h2>
             <div className="news-container">
                 <div className="news-wrapper">
                     {news.length > 0 ? (
