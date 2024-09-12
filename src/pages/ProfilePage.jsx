@@ -6,6 +6,7 @@ import CoursesPage from "./CoursesPage";
 import AccountNav from "../AccountNav";
 import Result from "./Result";
 import ResultsFormPage from "./ResultsFormPage";
+import CreateNewsFormPage from "./CreateNewsFormPage";
 
 export default function ProfilePage() {
     const [redirect, setRedirect] = useState(null);
@@ -63,6 +64,10 @@ export default function ProfilePage() {
             )}
             {user?.role === 'admin' && subpage === "admin-controls" && (
                 <ResultsFormPage />
+            )}
+
+{user?.role === 'admin' && subpage === "post" && (
+                <CreateNewsFormPage />
             )}
         </div>
     );

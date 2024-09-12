@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import About from "./About";
+import News from "./News";
 
 export default function IndexPage() {
     const [courses, setCourses] = useState([]);
@@ -76,6 +77,8 @@ export default function IndexPage() {
             </div>
 
            <About />
+
+           <News />
         </>
     );
 }

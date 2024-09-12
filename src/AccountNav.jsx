@@ -40,6 +40,9 @@ export default function AccountNav({ user }) {
                     <Link className={linkClasses("view")} to={"/account/view"}>
                         View results
                     </Link>
+                    <Link className={linkClasses("post")} to={"/account/post"}>
+                        Post news
+                    </Link>
                 </>
             )}
         </nav>
