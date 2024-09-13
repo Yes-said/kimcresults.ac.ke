@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
 import axios from 'axios';
-import AccountNav from '../AccountNav';
 import { UserContext } from '../UserContext';
+import AccountNav from '../AccountNav';
 
 const ResultsFormPage = () => {
     const [studentName, setStudentName] = useState('');
@@ -59,7 +59,7 @@ const ResultsFormPage = () => {
     
     return (
         <>
-            <AccountNav />
+        <AccountNav />
             <div className="mt-4 grow flex items-center justify-around">
                 <div className="mb-64">
                     <h1 className="text-4xl text-center mb-4">Upload Results</h1>

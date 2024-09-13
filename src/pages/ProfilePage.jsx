@@ -49,7 +49,8 @@ export default function ProfilePage() {
 
     return (
         <div>
-            {ready && <AccountNav user={user} />} {/* Ensure AccountNav is rendered only when ready */}
+            {/* Ensure AccountNav is rendered only when ready and user is available */}
+            {user && <AccountNav user={user} />} 
             {subpage === "profile" && (
                 <div className="text-center">
                     logged in as {user.name} ({user.email})<br />
@@ -65,8 +66,7 @@ export default function ProfilePage() {
             {user?.role === 'admin' && subpage === "admin-controls" && (
                 <ResultsFormPage />
             )}
-
-{user?.role === 'admin' && subpage === "post" && (
+            {user?.role === 'admin' && subpage === "post" && (
                 <CreateNewsFormPage />
             )}
         </div>
