@@ -30,6 +30,7 @@ export default function Result() {
                                 <th className="px-4 py-2 border">Course</th>
                                 <th className="px-4 py-2 border">Units</th>
                                 <th className="px-4 py-2 border">Marks</th>
+                                <th className="px-4 py-2 border">PDF</th> {/* New column for PDF link */}
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,11 @@ export default function Result() {
                                     <td className="px-4 py-2 border">{result.course}</td>
                                     <td className="px-4 py-2 border">{result.units}</td>
                                     <td className="px-4 py-2 border">{result.marks}</td>
+                                    <td className="px-4 py-2 border">
+                                        <a href={`http://localhost:4000/${result.pdf}`} target="_blank" rel="noopener noreferrer">
+                                            Download PDF
+                                        </a>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
