@@ -7,104 +7,145 @@ const ResultsFormPage = () => {
     const [studentName, setStudentName] = useState('');
     const [registrationNumber, setRegistrationNumber] = useState('');
     const [course, setCourse] = useState('');
-    const [units, setUnits] = useState('');
-    const [marks, setMarks] = useState('');
+    const [units, setUnits] = useState([{ unit: '', marks: '' }]);
     const [pdfFile, setPdfFile] = useState(null);
     const formRef = useRef(null);
 
     const { user } = useContext(UserContext); // Access user context
 
+    const handleUnitChange = (index, event) => {
+        const newUnits = [...units];
+        newUnits[index][event.target.name] = event.target.value;
+        setUnits(newUnits);
+    };
+
+    const addUnitField = () => {
+        setUnits([...units, { unit: '', marks: '' }]);
+    };
+
+    const handlePdfChange = (e) => {
+        const file = e.target.files[0];
+        // Limit file size to 5MB
+        if (file && file.size > 5 * 1024 * 1024) {
+            alert('File size should not exceed 5MB');
+        } else {
+            setPdfFile(file);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        const token = user?.token; // Ensure token is retrieved from user context
-    
-       
-    
+        const token = user?.token;
+
         const formData = new FormData();
-        formData.append("studentName", studentName);
-        formData.append("registrationNumber", registrationNumber);
-        formData.append("course", course);
-        formData.append("units", units);
-        formData.append("marks", marks);
-        formData.append("pdfFile", pdfFile);
-    
+        formData.append('studentName', studentName);
+        formData.append('registrationNumber', registrationNumber);
+        formData.append('course', course);
+        formData.append('pdfFile', pdfFile);
+        units.forEach((unit, index) => {
+            formData.append(`units[${index}][unit]`, unit.unit);
+            formData.append(`units[${index}][marks]`, unit.marks);
+        });
+
         try {
-            const response = await axios.post("http://localhost:4000/upload-results", formData, {
+            const response = await axios.post('http://localhost:4000/upload-results', formData, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}` // Include the token here
+                    'Authorization': `Bearer ${token}`,
                 },
             });
-    
+
             if (response.data.success) {
-                alert("Results uploaded successfully");
+                alert('Results uploaded successfully');
                 setStudentName('');
                 setRegistrationNumber('');
                 setCourse('');
-                setUnits('');
-                setMarks('');
+                setUnits([{ unit: '', marks: '' }]);
                 setPdfFile(null);
-                formRef.current.reset();
+                formRef.current.reset(); // Reset the form
             } else {
-                alert("Failed to upload results");
+                alert('Failed to upload results');
             }
         } catch (error) {
-            console.error("Error uploading results:", error);
-            alert("An error occurred. Please try again.");
+            console.error('Error uploading results:', error);
+            alert('An error occurred. Please try again.');
         }
     };
-    
-    
+
     return (
         <>
-        <AccountNav />
+            <AccountNav />
             <div className="mt-4 grow flex items-center justify-around">
                 <div className="mb-64">
-                    <h1 className="text-4xl text-center mb-4">Upload Results</h1>
+                    <h1 className="text-4xl text-center mb-4">Upload Student Results</h1>
                     <form ref={formRef} onSubmit={handleSubmit} className="max-w-md mx-auto">
+                        <label className="block mb-2">Student Name</label>
                         <input
                             type="text"
                             value={studentName}
                             onChange={(e) => setStudentName(e.target.value)}
-                            placeholder="Student Name"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-2"
+                            placeholder="Enter student's full name"
+                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
                         />
+                        
+                        <label className="block mb-2">Registration Number</label>
                         <input
                             type="text"
                             value={registrationNumber}
                             onChange={(e) => setRegistrationNumber(e.target.value)}
-                            placeholder="Registration Number"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-2"
+                            placeholder="Enter registration number"
+                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
                         />
+
+                        <label className="block mb-2">Course</label>
                         <input
                             type="text"
                             value={course}
                             onChange={(e) => setCourse(e.target.value)}
-                            placeholder="Course"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-2"
+                            placeholder="Enter course name"
+                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
                         />
-                        <input
-                            type="text"
-                            value={units}
-                            onChange={(e) => setUnits(e.target.value)}
-                            placeholder="Units"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-2"
-                        />
-                        <input
-                            type="text"
-                            value={marks}
-                            onChange={(e) => setMarks(e.target.value)}
-                            placeholder="Marks"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-2"
-                        />
+
+                        <label className="block mb-2">Units and Marks</label>
+                        {units.map((unit, index) => (
+                            <div key={index} className="mb-4">
+                                <input
+                                    type="text"
+                                    name="unit"
+                                    value={unit.unit}
+                                    onChange={(e) => handleUnitChange(index, e)}
+                                    placeholder={`Unit ${index + 1}`}
+                                    className="block w-full p-2 border border-gray-300 rounded-md mb-2"
+                                />
+                                <input
+                                    type="text"
+                                    name="marks"
+                                    value={unit.marks}
+                                    onChange={(e) => handleUnitChange(index, e)}
+                                    placeholder="Enter marks for this unit"
+                                    className="block w-full p-2 border border-gray-300 rounded-md"
+                                />
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={addUnitField}
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
+                        >
+                            Add Unit
+                        </button>
+
+                        <label className="block mb-2">Upload PDF File</label>
                         <input
                             type="file"
-                            onChange={(e) => setPdfFile(e.target.files[0])}
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-2"
+                            onChange={handlePdfChange}
+                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
                         />
-                        <button type="submit" className="primary mt-4">Submit</button>
+
+                        <button type="submit" className="primary mt-4">
+                            Submit
+                        </button>
                     </form>
                 </div>
             </div>

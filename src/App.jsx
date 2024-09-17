@@ -15,6 +15,7 @@ import MyResults from './pages/MyResults.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import CreateNewsFormPage from './pages/CreateNewsFormPage.jsx';
+import UpdateResults from './pages/UpdateResults.jsx';
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -35,6 +36,7 @@ function App() {
           <Route path="/account/view" element={<Result />} />
           <Route path="/account/post" element={<CreateNewsFormPage />} />
           <Route path="/account/results" element={<MyResults />} />
+          <Route path="/update-result/:id" element={<UpdateResults />} /> {/* Route for update */}
           <Route path="/account/courses/new" element={<CoursesFormPage />} />
           <Route path="/account/courses/:id" element={<CoursesFormPage />} />
         </Route>

@@ -22,63 +22,68 @@ export default function IndexPage() {
     }, []);
 
     if (loading) {
-        return <p>Loading courses...</p>;
+        return <p className="text-center mt-8 text-lg">Loading courses...</p>;
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return <p className="text-center text-red-500">{error}</p>;
     }
 
     return (
         <>
             {/* Banner */}
-            <div className="bg-blue-500 mt-8 text-white text-center py-4">
-                <h2 className="text-lg font-semibold">Students Enrolled</h2>
+            <div className="bg-gradient-to-r from-blue-500 to-blue-700 mt-8 text-white text-center py-8 shadow-lg">
+                <h2 className="text-2xl font-bold tracking-wider">Students Enrolled</h2>
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto mt-4">
-                <table className="min-w-full bg-white mt-8 mb-8 border border-gray-200 divide-y divide-gray-300">
+            <div className="overflow-x-auto mt-8 px-4">
+                <table className="min-w-full bg-white shadow-md rounded-lg border border-gray-200">
                     <thead>
-                        <tr className="bg-gray-50">
-                            <th className="px-4 py-2 border">Name</th>
-                            <th className="px-4 py-2 border">CourseName</th>
-                            <th className="px-4 py-2 border">Department</th>
-                            <th className="px-4 py-2 border">Year</th>
-                            <th className="px-4 py-2 border">Units</th>
-                            <th className="px-4 py-2 border">Phone</th>
-                            <th className="px-4 py-2 border">Admission</th>
-                            <th className="px-4 py-2 border">Units Enrolled</th>
-                            <th className="px-4 py-2 border">Gender</th>
+                        <tr className="bg-gray-200 text-left">
+                            <th className="px-6 py-3 text-sm font-semibold border">Name</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Course Name</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Department</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Year</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Units</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Phone</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Admission</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Units Enrolled</th>
+                            <th className="px-6 py-3 text-sm font-semibold border">Gender</th>
                         </tr>
                     </thead>
                     <tbody>
                         {courses.length > 0 ? (
                             courses.map((course) => (
-                                <tr key={course._id} className={courses.indexOf(course) % 2 === 0 ? "bg-gray-100" : ""}>
-                                    <td className="px-4 py-2 border">{course.name}</td>
-                                    <td className="px-4 py-2 border">{course.courseName}</td>
-                                    <td className="px-4 py-2 border">{course.department}</td>
-                                    <td className="px-4 py-2 border">{course.year}</td>
-                                    <td className="px-4 py-2 border">{course.units}</td>
-                                    <td className="px-4 py-2 border">{course.phone}</td>
-                                    <td className="px-4 py-2 border">{course.admission}</td>
-                                    <td className="px-4 py-2 border">{course.unitsEnrolled}</td>
-                                    <td className="px-4 py-2 border">{course.gender}</td>
+                                <tr key={course._id} className={`hover:bg-blue-50 transition-colors ${courses.indexOf(course) % 2 === 0 ? "bg-gray-50" : ""}`}>
+                                    <td className="px-6 py-3 border">{course.name}</td>
+                                    <td className="px-6 py-3 border">{course.courseName}</td>
+                                    <td className="px-6 py-3 border">{course.department}</td>
+                                    <td className="px-6 py-3 border">{course.year}</td>
+                                    <td className="px-6 py-3 border">{course.units}</td>
+                                    <td className="px-6 py-3 border">{course.phone}</td>
+                                    <td className="px-6 py-3 border">{course.admission}</td>
+                                    <td className="px-6 py-3 border">{course.unitsEnrolled}</td>
+                                    <td className="px-6 py-3 border">{course.gender}</td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td className="px-4 py-2 border text-center" colSpan="9">No courses found</td>
+                                <td className="px-6 py-3 border text-center" colSpan="9">No courses found</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
 
-           <About />
+            {/* About and News Sections */}
+            <div className="my-8 px-4">
+                <About />
+            </div>
 
-           <News />
+            <div className="my-8 px-4">
+                <News />
+            </div>
         </>
     );
 }
