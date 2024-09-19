@@ -76,44 +76,45 @@ export default function LoginPage() {
                 <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">Login</h1>
                 <form className="space-y-6" onSubmit={handleLoginSubmit}>
                     <div className="relative">
-                        <FaUser className="absolute left-3 top-3 text-gray-400" />
+                        <FaUser className="absolute left-3 top-3.5 text-gray-400" />
                         <input 
                             type="email" 
                             placeholder="     your@gmail.com" 
                             value={email} 
                             onChange={ev => setEmail(ev.target.value)} 
                             onBlur={handleEmailBlur}
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                             required
                         />
                     </div>
                     <div className="relative">
-                        <FaLock className="absolute left-3 top-3 text-gray-400" />
+                        <FaLock className="absolute left-3 top-3.5 text-gray-400" />
                         <input 
                             type="password" 
                             placeholder="     password" 
                             value={password} 
                             onChange={ev => setPassword(ev.target.value)} 
                             onBlur={handlePasswordBlur}
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                             minLength={6}
                             required
                         />
                     </div>
                     <div className="relative">
-                        <FaUserGraduate className="absolute left-3 top-3 text-gray-400" />
+                        <FaUserGraduate className="absolute left-3 top-3.5 text-gray-400" />
                         <select 
                             value={role} 
                             onChange={ev => setRole(ev.target.value)} 
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            style={{ zIndex: 10 }} // Correctly using the style prop
                         >
                             <option value="student">Student</option>
                             <option value="admin">Admin</option>
                         </select>
                     </div>
                     <button 
-                        className="w-full bg-blue-500 hover:bg-purple-700 text-white font-bold py-3 rounded-md transition duration-300 ease-in-out"
-                    >
+                        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out mt-6"
+                        >
                         Login
                     </button>
                     <div className="text-center py-2 text-gray-500">

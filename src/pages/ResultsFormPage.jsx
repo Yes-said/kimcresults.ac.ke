@@ -76,77 +76,82 @@ const ResultsFormPage = () => {
     return (
         <>
             <AccountNav />
-            <div className="mt-4 grow flex items-center justify-around">
-                <div className="mb-64">
-                    <h1 className="text-4xl text-center mb-4">Upload Student Results</h1>
-                    <form ref={formRef} onSubmit={handleSubmit} className="max-w-md mx-auto">
-                        <label className="block mb-2">Student Name</label>
-                        <input
-                            type="text"
-                            value={studentName}
-                            onChange={(e) => setStudentName(e.target.value)}
-                            placeholder="Enter student's full name"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
-                        />
-                        
-                        <label className="block mb-2">Registration Number</label>
-                        <input
-                            type="text"
-                            value={registrationNumber}
-                            onChange={(e) => setRegistrationNumber(e.target.value)}
-                            placeholder="Enter registration number"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
-                        />
+            <div className="min-h-screen flex flex-col">
+                <div className="flex-grow flex items-center justify-center bg-gray-300">
+                    <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg">
+                        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Upload Student Results</h1>
+                        <form ref={formRef} onSubmit={handleSubmit}>
+                            <label className="block text-sm font-medium text-gray-700">Student Name</label>
+                            <input
+                                type="text"
+                                value={studentName}
+                                onChange={(e) => setStudentName(e.target.value)}
+                                placeholder="Enter student's full name"
+                                className="block w-full px-4 py-2 mt-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 mb-2"
+                            />
 
-                        <label className="block mb-2">Course</label>
-                        <input
-                            type="text"
-                            value={course}
-                            onChange={(e) => setCourse(e.target.value)}
-                            placeholder="Enter course name"
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
-                        />
+                            <label className="block text-sm font-medium text-gray-700">Registration Number</label>
+                            <input
+                                type="text"
+                                value={registrationNumber}
+                                onChange={(e) => setRegistrationNumber(e.target.value)}
+                                placeholder="Enter registration number"
+                                className="block w-full px-4 py-2 mt-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 mb-2"
+                            />
 
-                        <label className="block mb-2">Units and Marks</label>
-                        {units.map((unit, index) => (
-                            <div key={index} className="mb-4">
-                                <input
-                                    type="text"
-                                    name="unit"
-                                    value={unit.unit}
-                                    onChange={(e) => handleUnitChange(index, e)}
-                                    placeholder={`Unit ${index + 1}`}
-                                    className="block w-full p-2 border border-gray-300 rounded-md mb-2"
-                                />
-                                <input
-                                    type="text"
-                                    name="marks"
-                                    value={unit.marks}
-                                    onChange={(e) => handleUnitChange(index, e)}
-                                    placeholder="Enter marks for this unit"
-                                    className="block w-full p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            onClick={addUnitField}
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
-                        >
-                            Add Unit
-                        </button>
+                            <label className="block text-sm font-medium text-gray-700">Course</label>
+                            <input
+                                type="text"
+                                value={course}
+                                onChange={(e) => setCourse(e.target.value)}
+                                placeholder="Enter course name"
+                                className="block w-full px-4 py-2 mt-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 mb-2"
+                            />
 
-                        <label className="block mb-2">Upload PDF File</label>
-                        <input
-                            type="file"
-                            onChange={handlePdfChange}
-                            className="block w-full p-2 border border-gray-300 rounded-md mb-4"
-                        />
+                            <label className="block text-sm font-medium text-gray-700">Units and Marks</label>
+                            {units.map((unit, index) => (
+                                <div key={index} className="flex gap-4 mb-2">
+                                    <input
+                                        type="text"
+                                        name="unit"
+                                        value={unit.unit}
+                                        onChange={(e) => handleUnitChange(index, e)}
+                                        placeholder={`Unit ${index + 1}`}
+                                        className="block w-full px-4 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                    <input
+                                        type="text"
+                                        name="marks"
+                                        value={unit.marks}
+                                        onChange={(e) => handleUnitChange(index, e)}
+                                        placeholder="Marks"
+                                        className="block w-full px-4 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                            ))}
+                            <button
+                                type="button"
+                                onClick={addUnitField}
+                                className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mb-2 hover:bg-blue-600 transition"
+                            >
+                                Add Unit
+                            </button>
 
-                        <button type="submit" className="primary mt-4">
-                            Submit
-                        </button>
-                    </form>
+                            <label className="block text-sm font-medium text-gray-700">Upload PDF File</label>
+                            <input
+                                type="file"
+                                onChange={handlePdfChange}
+                                className="block w-full px-4 py-2 mt-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 mb-2"
+                            />
+
+                            <button
+                                type="submit"
+                                className="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+                            >
+                                Submit
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </>

@@ -41,12 +41,17 @@ export default function ProfilePage() {
     }
 
     const handleDelete = async () => {
-        try {
-            await axios.delete("/delete-profile");
-            setRedirect("/"); // Redirect to homepage or login page
-        } catch (error) {
-            console.error("Failed to delete profile", error);
-            alert("Failed to delete profile.");
+        const confirmed = window.confirm("Are you sure you want to delete your profile? This action cannot be undone.");
+        if (confirmed) {
+            try {
+                await axios.delete("/delete-profile");
+                setUser(null); // Immediately clear the user context
+                setRedirect("/"); // Redirect to homepage or login page
+                alert("Profile deleted successfully.");
+            } catch (error) {
+                console.error("Failed to delete profile", error);
+                alert("Failed to delete profile.");
+            }
         }
     };
 
@@ -128,13 +133,12 @@ export default function ProfilePage() {
                                 Update Profile
                             </button>
                             <button
-        type="button"
-        onClick={handleDelete}
-        className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-    >
-        Delete Profile
-    </button>
-                            
+                                type="button"
+                                onClick={handleDelete}
+                                className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                            >
+                                Delete Profile
+                            </button>
                             <button
                                 type="button"
                                 onClick={Logout}
