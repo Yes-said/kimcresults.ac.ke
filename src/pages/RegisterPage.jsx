@@ -117,7 +117,7 @@ export default function RegisterPage() {
                         <select 
                             value={role} 
                             onChange={ev => setRole(ev.target.value)} 
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                         >
                             <option value="student">Student</option>
                             <option value="admin">Admin</option>
@@ -125,7 +125,7 @@ export default function RegisterPage() {
                     </div>
 
                     <button 
-                        className="w-full bg-blue-500 hover:bg-purple-700 text-white font-bold py-3 rounded-md transition duration-300 ease-in-out"
+                        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out"
                     >
                         Register
                     </button>
