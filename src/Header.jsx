@@ -2,10 +2,24 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
 import LOGO from './assets/LOGO.png';
+import { useState } from "react";
+import axios from "axios";
 
 export default function Header() {
   const { user } = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`/search?query=${searchQuery}`);
+      const results = response.data; // Adjusted to use response.data directly
+      setSearchResults(results);
+    } catch (error) {
+      console.error('Search failed:', error);
+    }
+  };
+  
   return (
     <header className='flex flex-wrap justify-between items-center py-3 px-4 bg-white shadow-md'>
       {/* Logo and Brand Name */}
@@ -14,15 +28,20 @@ export default function Header() {
         <span className="ml-2 text-lg sm:text-xl font-semibold text-gray-700">Kenya Institute Of Mass Communication</span>
       </Link>
 
-      {/* Middle section */}
-      <div className='flex flex-wrap items-center gap-2 sm:gap-4 border border-gray-300 rounded-full py-2 px-4 shadow-md mt-3 sm:mt-0'>
-        <div className="text-gray-700 font-medium text-sm sm:text-base">Any Department</div>
-        <div className='border-l border-gray-300 h-6'></div>
-        <div className="text-gray-700 font-medium text-sm sm:text-base">Any Course</div>
-        <div className='border-l border-gray-300 h-6'></div>
-        <div className="text-gray-700 font-medium text-sm sm:text-base">Add Student</div>
-        <button className='ml-2 sm:ml-4 p-1 sm:p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition'>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
+      {/* Middle section with search */}
+      <div className='flex items-center w-full sm:w-auto gap-2 sm:gap-4 py-2 px-4 bg-gray-100 rounded-full shadow-lg transition-all duration-300 ease-in-out mt-3 sm:mt-0 focus-within:bg-white border focus-within:border-blue-500'>
+        <input
+          type="text"
+          placeholder="Search by Name,department or course"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="text-gray-700 font-small text-sm sm:text-base outline-none bg-transparent w-full placeholder-gray-500 px-2"
+        />
+        <button
+          onClick={handleSearch}
+          className='p-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full hover:from-blue-600 hover:to-indigo-700 shadow-lg transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-400'
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
             <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
           </svg>
         </button>
