@@ -2,7 +2,8 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
-import { FaLock, FaUser, FaUserGraduate } from "react-icons/fa";
+import { FaLock, } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -76,41 +77,58 @@ export default function LoginPage() {
                 <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">Login</h1>
                 <form className="space-y-6" onSubmit={handleLoginSubmit}>
                     <div className="relative">
-                        <FaUser className="absolute left-3 top-3.5 text-gray-400" />
+                        <MdEmail  className="absolute left-3 top-5 text-gray-400" />
                         <input 
                             type="email" 
                             placeholder="     your@gmail.com" 
                             value={email} 
                             onChange={ev => setEmail(ev.target.value)} 
                             onBlur={handleEmailBlur}
-                            className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required
                         />
                     </div>
                     <div className="relative">
-                        <FaLock className="absolute left-3 top-3.5 text-gray-400" />
+                        <FaLock className="absolute left-3 top-4 text-gray-400" />
                         <input 
                             type="password" 
                             placeholder="     password" 
                             value={password} 
                             onChange={ev => setPassword(ev.target.value)} 
                             onBlur={handlePasswordBlur}
-                            className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             minLength={6}
                             required
                         />
                     </div>
                     <div className="relative">
-                        <FaUserGraduate className="absolute left-3 top-3.5 text-gray-400" />
-                        <select 
-                            value={role} 
-                            onChange={ev => setRole(ev.target.value)} 
-                            className="w-full py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                            style={{ zIndex: 10 }} // Correctly using the style prop
-                        >
-                            <option value="student">Student</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                        <div className="relative">
+    <div className="flex items-center justify-center space-x-4">
+        <label className="flex items-center">
+            <input 
+                type="radio" 
+                name="role" 
+                value="student" 
+                checked={role === "student"} 
+                onChange={ev => setRole(ev.target.value)} 
+                className="form-radio h-4 w-4 text-blue-500"
+            />
+            <span className="ml-2 text-gray-700">Student</span>
+        </label>
+        <label className="flex items-center">
+            <input 
+                type="radio" 
+                name="role" 
+                value="admin" 
+                checked={role === "admin"} 
+                onChange={ev => setRole(ev.target.value)} 
+                className="form-radio h-4 w-4 text-blue-500"
+            />
+            <span className="ml-2 text-gray-700">Admin</span>
+        </label>
+    </div>
+</div>
+
                     </div>
                     <button 
                         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out mt-6"
@@ -118,12 +136,12 @@ export default function LoginPage() {
                         Login
                     </button>
                     <div className="text-center py-2 text-gray-500">
-                        <Link to={"/forgot-password"} className="underline text-purple-600">
+                        <Link to={"/forgot-password"} className="underline text-black">
                             Forgot Password?
                         </Link>
                     </div>
                     <div className="text-center py-2 text-gray-500">
-                        Don't have an account yet? <Link className="underline text-purple-600" to={"/register"}>Register now</Link>
+                        Don't have an account yet? <Link className="underline text-black" to={"/register"}>Register now</Link>
                     </div>
                 </form>
                 {showSuccessMessage && (

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import About from "./About";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import News from "./News";
 
 export default function IndexPage() {
@@ -76,11 +76,19 @@ export default function IndexPage() {
                 </table>
             </div>
 
-            {/* About and News Sections */}
-            <div className="my-8 px-4">
-                <About />
-            </div>
+           {/* Link to About Page */}
+<div className="text-center my-8">
+    <Link 
+        to="/about" 
+        className="relative inline-block bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200 transform hover:scale-105"
+    >
+        Learn More About Us
+        <span className="ml-2 inline-block transition-transform duration-200 transform group-hover:translate-x-1">→</span>
+    </Link>
+</div>
 
+
+            {/* News Section */}
             <div className="my-8 px-4">
                 <News />
             </div>

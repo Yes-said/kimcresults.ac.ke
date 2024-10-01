@@ -5,7 +5,7 @@ import AccountNav from '../AccountNav';
 
 const ResultsFormPage = () => {
     const [studentName, setStudentName] = useState('');
-    const [registrationNumber, setRegistrationNumber] = useState('');
+    const [admission, setAdmission] = useState('');
     const [course, setCourse] = useState('');
     const [units, setUnits] = useState([{ unit: '', marks: '' }]);
     const [pdfFile, setPdfFile] = useState(null);
@@ -25,13 +25,14 @@ const ResultsFormPage = () => {
 
     const handlePdfChange = (e) => {
         const file = e.target.files[0];
-        // Limit file size to 5MB
         if (file && file.size > 5 * 1024 * 1024) {
             alert('File size should not exceed 5MB');
+            setPdfFile(null); // Reset pdfFile if the file is too large
         } else {
             setPdfFile(file);
         }
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +40,7 @@ const ResultsFormPage = () => {
 
         const formData = new FormData();
         formData.append('studentName', studentName);
-        formData.append('registrationNumber', registrationNumber);
+        formData.append('admission', admission);
         formData.append('course', course);
         formData.append('pdfFile', pdfFile);
         units.forEach((unit, index) => {
@@ -59,7 +60,7 @@ const ResultsFormPage = () => {
             if (response.data.success) {
                 alert('Results uploaded successfully');
                 setStudentName('');
-                setRegistrationNumber('');
+                setAdmission('');
                 setCourse('');
                 setUnits([{ unit: '', marks: '' }]);
                 setPdfFile(null);
@@ -90,12 +91,12 @@ const ResultsFormPage = () => {
                                 className="block w-full px-4 py-2 mt-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 mb-2"
                             />
 
-                            <label className="block text-sm font-medium text-gray-700">Registration Number</label>
+                            <label className="block text-sm font-medium text-gray-700">Admission</label>
                             <input
                                 type="text"
-                                value={registrationNumber}
-                                onChange={(e) => setRegistrationNumber(e.target.value)}
-                                placeholder="Enter registration number"
+                                value={admission}
+                                onChange={(e) => setAdmission(e.target.value)}
+                                placeholder="Enter admission number"
                                 className="block w-full px-4 py-2 mt-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 mb-2"
                             />
 

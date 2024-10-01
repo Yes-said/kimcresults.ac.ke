@@ -32,7 +32,7 @@ export default function Header() {
       <div className='flex items-center w-full sm:w-auto gap-2 sm:gap-4 py-2 px-4 bg-gray-100 rounded-full shadow-lg transition-all duration-300 ease-in-out mt-3 sm:mt-0 focus-within:bg-white border focus-within:border-blue-500'>
         <input
           type="text"
-          placeholder="Search by Name,department or course"
+          placeholder="name,department,course"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="text-gray-700 font-small text-sm sm:text-base outline-none bg-transparent w-full placeholder-gray-500 px-2"

@@ -1,14 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaLock, FaUser, FaUserGraduate } from "react-icons/fa";
+import { FaLock, FaUser } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 export default function RegisterPage() {
     const [name, setName] = useState('');
+    const [admission, setAdmission] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('student'); // Default to student
     const [nameError, setNameError] = useState('');
+    const [admissionError, setAdmissionError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -37,6 +40,13 @@ export default function RegisterPage() {
             setNameError('');
         }
 
+        if (admission === '') {
+            setAdmissionError('Admission is required.');
+            hasError = true;
+        } else {
+            setAdmissionError('');
+        }
+
         if (!validateEmail(email)) {
             setEmailError('Invalid email format.');
             hasError = true;
@@ -54,7 +64,7 @@ export default function RegisterPage() {
         if (hasError) return;
 
         try {
-            await axios.post("/register", { name, email, password, role });
+            await axios.post("/register", { name, admission, email, password, role });
             setShowSuccessMessage(true);
             setErrorMessage(''); // Clear any previous error messages
 
@@ -73,39 +83,51 @@ export default function RegisterPage() {
                 <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">Register</h1>
                 <form className="space-y-6" onSubmit={registerUser}>
                     <div className="relative">
-                        <FaUser className="absolute left-3 top-3 text-gray-400" />
+                        <FaUser className="absolute left-3 top-4 text-gray-400" />
                         <input 
                             type="text" 
                             placeholder="     Your full name" 
                             value={name} 
                             onChange={ev => setName(ev.target.value)}
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required
                         />
                         {nameError && <div className="text-red-500 text-sm mt-1">{nameError}</div>}
                     </div>
 
                     <div className="relative">
-                        <FaUser className="absolute left-3 top-3 text-gray-400" />
+                        <input 
+                            type="text" 
+                            placeholder="Enter your admission number" 
+                            value={admission} 
+                            onChange={ev => setAdmission(ev.target.value)}
+                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        />
+                        {admissionError && <div className="text-red-500 text-sm mt-1">{admissionError}</div>}
+                    </div>
+
+                    <div className="relative">
+                        <MdEmail className="absolute left-3 top-5 text-gray-400" />
                         <input 
                             type="email" 
                             placeholder="     your@gmail.com" 
                             value={email} 
                             onChange={ev => setEmail(ev.target.value)} 
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required
                         />
                         {emailError && <div className="text-red-500 text-sm mt-1">{emailError}</div>}
                     </div>
 
                     <div className="relative">
-                        <FaLock className="absolute left-3 top-3 text-gray-400" />
+                        <FaLock className="absolute left-3 top-4 text-gray-400" />
                         <input 
                             type="password" 
                             placeholder="     Password" 
                             value={password} 
                             onChange={ev => setPassword(ev.target.value)} 
-                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full p-3 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             minLength={8}
                             required
                         />
@@ -113,16 +135,31 @@ export default function RegisterPage() {
                     </div>
 
                     <div className="relative">
-                        <FaUserGraduate className="absolute left-3 top-3 text-gray-400" />
-                        <select 
-                            value={role} 
-                            onChange={ev => setRole(ev.target.value)} 
-                            className="w-full py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        >
-                            <option value="student">Student</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
+                    <div className="flex items-center justify-center space-x-4">
+        <label className="flex items-center">
+            <input 
+                type="radio" 
+                name="role" 
+                value="student" 
+                checked={role === "student"} 
+                onChange={ev => setRole(ev.target.value)} 
+                className="form-radio h-4 w-4 text-purple-600"
+            />
+            <span className="ml-2 text-gray-700">Student</span>
+        </label>
+        <label className="flex items-center">
+            <input 
+                type="radio" 
+                name="role" 
+                value="admin" 
+                checked={role === "admin"} 
+                onChange={ev => setRole(ev.target.value)} 
+                className="form-radio h-4 w-4 text-purple-600"
+            />
+            <span className="ml-2 text-gray-700">Admin</span>
+        </label>
+    </div>
+</div>
 
                     <button 
                         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out"
@@ -131,7 +168,7 @@ export default function RegisterPage() {
                     </button>
 
                     <div className="text-center py-2 text-gray-500">
-                        Already have an account? <Link className="underline text-purple-600" to={"/login"}>Login</Link>
+                        Already have an account? <Link className="underline text-black" to={"/login"}>Login</Link>
                     </div>
                 </form>
 
