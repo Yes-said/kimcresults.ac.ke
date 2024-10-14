@@ -40,7 +40,7 @@ export default function About() {
                         Our mission is to provide students with secure and instant access to
                          their academic results from anywhere, at any time. We aim to ensure 
                          that the result dissemination process is timely, efficient, and highly
-                          accurate, while also being accessible for both students and staff and parents. 
+                          accurate, while also being accessible for both students,staff and parents. 
                     </p>
                     <p className="text-lg text-gray-700 leading-relaxed text-center">
                         By modernizing this process, KIMC aligns with global educational trends

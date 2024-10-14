@@ -26,6 +26,8 @@ export default function MyResults() {
                         <thead className="bg-gray-700 text-white">
                             <tr>
                                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Student Name</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Department</th>
+                                <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Year</th>
                                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Registration Number</th>
                                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Course</th>
                                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Units & Marks</th>
@@ -35,9 +37,11 @@ export default function MyResults() {
                         <tbody className="bg-white divide-y divide-gray-200">
                             {result.map((result, index) => (
                                 <tr key={result._id} className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}>
-                                    <td className="px-6 py-4 text-left border whitespace-nowrap">{result.studentName}</td>
-                                    <td className="px-6 py-4 text-left border whitespace-nowrap">{result.registrationNumber}</td>
-                                    <td className="px-6 py-4 text-left border whitespace-nowrap">{result.course}</td>
+                                     <td className="px-6 py-4 text-left border whitespace-nowrap">{result.student.name}</td>
+                                    <td className="px-6 py-4 text-left border whitespace-nowrap">{result.student.admission}</td>
+                                    <td className="px-6 py-4 text-left border whitespace-nowrap">{result.course.courseName}</td>
+                                    <td className="px-6 py-4 text-left border whitespace-nowrap">{result.course.department}</td>
+                                    <td className="px-6 py-4 text-left border whitespace-nowrap">{result.course.year}</td>
                                     <td className="px-6 py-4 text-left border whitespace-nowrap">
                                         {result.units.map((unit, i) => (
                                             <div key={i} className="mb-2">
