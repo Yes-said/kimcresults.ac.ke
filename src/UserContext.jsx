@@ -3,21 +3,27 @@ import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext({});
 
-export function UserContextProvider({children}) {
-    const [user,setUser] = useState(null);
+export function UserContextProvider({ children }) {
+    const [user, setUser] = useState(null);
     const [ready, setReady] = useState(false);
+
     useEffect(() => {
-        if (!user) {
-            axios.get("/profile").then(({data}) => {
-             setUser(data);
-             setReady(true);
-             });
+        const storedUser = localStorage.getItem("user"); // Retrieve the user from localStorage
+        if (storedUser) {
+            setUser(JSON.parse(storedUser)); // Parse and set user from localStorage
+            setReady(true);
+        } else {
+            axios.get("/profile").then(({ data }) => {
+                setUser(data);
+                localStorage.setItem("user", JSON.stringify(data)); // Store the user in localStorage
+                setReady(true);
+            });
         }
     }, []);
-return(
-    <UserContext.Provider value={{user,setUser,ready}}>
-        {children}
-    </UserContext.Provider>
-    
-);
+
+    return (
+        <UserContext.Provider value={{ user, setUser, ready }}>
+            {children}
+        </UserContext.Provider>
+    );
 }

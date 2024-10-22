@@ -4,13 +4,13 @@ import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import AccountNav from "../AccountNav";
 
-export default function ProfilePage() {
+ export default function ProfilePage() {
     const [redirect, setRedirect] = useState(null);
     const { ready, user, setUser } = useContext(UserContext);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
         name: "",
-        email: "",
+        identity: "",
         password: "",
     });
     let { subpage } = useParams();
@@ -28,7 +28,7 @@ export default function ProfilePage() {
             setLoading(false);
             setFormData({
                 name: user.name || "",
-                email: user.email || "",
+                identity: user.identity || "",
                 password: "",
             });
         }
@@ -104,14 +104,14 @@ export default function ProfilePage() {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Email:</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Identity:</label>
                             <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
+                                type="identity"
+                                name="identity"
+                                value={formData.identity}
                                 onChange={handleChange}
                                 className="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                placeholder="Enter your email"
+                                placeholder="Enter your identity"
                             />
                         </div>
                         <div className="mb-6">

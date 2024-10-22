@@ -1,54 +1,75 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
 import LOGO from './assets/LOGO.png';
-import { useState } from "react";
-import axios from "axios";
 
 export default function Header() {
   const { user } = useContext(UserContext);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(`/search?query=${searchQuery}`);
-      const results = response.data; // Adjusted to use response.data directly
-      setSearchResults(results);
-    } catch (error) {
-      console.error('Search failed:', error);
-    }
-  };
-  
   return (
     <header className='flex flex-wrap justify-between items-center py-3 px-4 bg-white shadow-md'>
       {/* Logo and Brand Name */}
       <Link to="/" className="flex items-center">
         <img src={LOGO} alt="LOGO" className="w-10 h-10 sm:w-12 sm:h-12" />
-        <span className="ml-2 text-lg sm:text-xl font-semibold text-gray-700">Kenya Institute Of Mass Communication</span>
+        <span className="ml-2 text-lg sm:text-xl font-semibold text-gray-700">
+          Kenya Institute Of Mass Communication
+        </span>
       </Link>
 
-      {/* Middle section with search */}
-      <div className='flex items-center w-full sm:w-auto gap-2 sm:gap-4 py-2 px-4 bg-gray-100 rounded-full shadow-lg transition-all duration-300 ease-in-out mt-3 sm:mt-0 focus-within:bg-white border focus-within:border-blue-500'>
-        <input
-          type="text"
-          placeholder="name,department,course"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="text-gray-700 font-small text-sm sm:text-base outline-none bg-transparent w-full placeholder-gray-500 px-2"
-        />
-        <button
-          onClick={handleSearch}
-          className='p-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full hover:from-blue-600 hover:to-indigo-700 shadow-lg transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-400'
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-            <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
-          </svg>
-        </button>
-      </div>
+      {/* Navigation Links */}
+      <nav className="flex items-center gap-4 mt-3 sm:mt-0">
+        {user && (
+          <div
+            className="relative"
+            onMouseEnter={() => setShowDropdown(true)}
+            onMouseLeave={() => setShowDropdown(false)}
+          >
+            <Link
+              to="/dashboard"
+              className="text-gray-700 font-medium text-sm sm:text-base hover:text-blue-500 transition"
+            >
+              Dashboard
+            </Link>
+
+            {/* Dropdown Menu */}
+            {showDropdown && (
+              <div className="absolute top-full left-0 bg-white shadow-lg rounded-md mt-1 py-2 w-48 z-10">
+                <Link
+                  to="/dashboard/profile"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/dashboard/courses"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
+                >
+                  Courses
+                </Link>
+                <Link
+                  to="/dashboard/results"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
+                >
+                  Results
+                </Link>
+                <Link
+                  to="/dashboard/settings"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
+                >
+                  Settings
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+      </nav>
 
       {/* User Account Section */}
-      <Link to={user ? "/account" : "/login"} className='flex items-center gap-2 border border-gray-300 rounded-full py-2 px-3 sm:px-4 hover:bg-gray-100 transition mt-3 sm:mt-0'>
+      <Link
+        to={user ? "/account" : "/login"}
+        className='flex items-center gap-2 border border-gray-300 rounded-full py-2 px-3 sm:px-4 hover:bg-gray-100 transition mt-3 sm:mt-0'
+      >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>

@@ -17,6 +17,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import CreateNewsFormPage from './pages/CreateNewsFormPage.jsx';
 import UpdateResults from './pages/UpdateResults.jsx';
 import About from './pages/About.jsx';
+import ContactPage from './pages/ContactPage.jsx';
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -32,6 +33,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/account" element={<ProfilePage />} />
           <Route path="/account/courses" element={<CoursesPage />} />
           <Route path="/account/admin-controls" element={<ResultsFormPage />} />
