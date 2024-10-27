@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./UserContextProvider";
 import LOGO from './assets/LOGO.png';
 
 export default function Header() {
@@ -25,42 +25,8 @@ export default function Header() {
             onMouseEnter={() => setShowDropdown(true)}
             onMouseLeave={() => setShowDropdown(false)}
           >
-            <Link
-              to="/dashboard"
-              className="text-gray-700 font-medium text-sm sm:text-base hover:text-blue-500 transition"
-            >
-              Dashboard
-            </Link>
+           
 
-            {/* Dropdown Menu */}
-            {showDropdown && (
-              <div className="absolute top-full left-0 bg-white shadow-lg rounded-md mt-1 py-2 w-48 z-10">
-                <Link
-                  to="/dashboard/profile"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
-                >
-                  Profile
-                </Link>
-                <Link
-                  to="/dashboard/courses"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
-                >
-                  Courses
-                </Link>
-                <Link
-                  to="/dashboard/results"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
-                >
-                  Results
-                </Link>
-                <Link
-                  to="/dashboard/settings"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
-                >
-                  Settings
-                </Link>
-              </div>
-            )}
           </div>
         )}
       </nav>

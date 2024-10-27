@@ -1,156 +1,58 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../UserContext";
-import { Navigate, useParams } from "react-router-dom";
-import axios from "axios";
-import AccountNav from "../AccountNav";
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../UserContextProvider';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
- export default function ProfilePage() {
-    const [redirect, setRedirect] = useState(null);
-    const { ready, user, setUser } = useContext(UserContext);
-    const [loading, setLoading] = useState(true);
-    const [formData, setFormData] = useState({
-        name: "",
-        identity: "",
-        password: "",
-    });
-    let { subpage } = useParams();
-    if (!subpage) {
-        subpage = "profile";
-    }
+const ProfilePage = () => {
+  const { user, setUser, logout } = useContext(UserContext);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!user) {
-            axios.get("/profile").then(({ data }) => {
-                setUser(data);
-                setLoading(false);
-            });
-        } else {
-            setLoading(false);
-            setFormData({
-                name: user.name || "",
-                identity: user.identity || "",
-                password: "",
-            });
-        }
-    }, [user, setUser]);
-
-    async function Logout() {
-        await axios.post("/logout");
-        setRedirect("/");
-        setUser(null);
-    }
-
-    const handleDelete = async () => {
-        const confirmed = window.confirm("Are you sure you want to delete your profile? This action cannot be undone.");
-        if (confirmed) {
-            try {
-                await axios.delete("/delete-profile");
-                setUser(null); // Immediately clear the user context
-                setRedirect("/"); // Redirect to homepage or login page
-                alert("Profile deleted successfully.");
-            } catch (error) {
-                console.error("Failed to delete profile", error);
-                alert("Failed to delete profile.");
-            }
-        }
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const { data } = await axios.get('/profile', { withCredentials: true });
+        setUser(data); // Set user data in context if token is verified
+      } catch (err) {
+        console.error('Token verification failed:', err);
+        setError('Please log in to view your profile.');
+        navigate('/login'); // Redirect to login page if verification fails
+      }
     };
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.put("/update-profile", formData);
-            setUser(response.data);
-            alert("Profile updated successfully.");
-        } catch (error) {
-            console.error("Failed to update profile", error);
-        }
-    };
-
-    if (loading || !ready) {
-        return "Loading...";
+    if (!user) {
+      fetchUserProfile(); // Fetch only if user data is not already set
     }
+  }, [user, setUser, navigate]);
 
-    if (ready && !user && !redirect) {
-        return <Navigate to={"/login"} />;
-    }
+  if (error) {
+    return <div>{error}</div>;
+  }
 
-    if (redirect) {
-        return <Navigate to={redirect} />;
-    }
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
-    return (
-        <div className="min-h-screen bg-gray-300 p-6">
-            {user && <AccountNav user={user} />}
-            {subpage === "profile" && (
-                <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">Update Profile</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Name:</label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                className="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                placeholder="Enter your name"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Identity:</label>
-                            <input
-                                type="identity"
-                                name="identity"
-                                value={formData.identity}
-                                onChange={handleChange}
-                                className="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                placeholder="Enter your identity"
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Password (leave blank if unchanged):</label>
-                            <input
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                className="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                placeholder="Enter new password"
-                            />
-                        </div>
-                        <div className="flex justify-between">
-                            <button
-                                type="submit"
-                                className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                            >
-                                Update Profile
-                            </button>
-                            <button
-                                type="button"
-                                onClick={handleDelete}
-                                className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-                            >
-                                Delete Profile
-                            </button>
-                            <button
-                                type="button"
-                                onClick={Logout}
-                                className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-                            >
-                                Logout
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            )}
-            {/* Other content based on subpage */}
-        </div>
-    );
-}
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Profile</h1>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-xl font-semibold">User Information</h2>
+        <p><strong>Name:</strong> {user.name}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+        {/* Add more user fields as needed */}
+      </div>
+      <button
+        onClick={logout}
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Logout
+      </button>
+      <Link to="/" className="mt-2 inline-block text-blue-500 hover:underline">
+        Back to Home
+      </Link>
+    </div>
+  );
+};
+
+export default ProfilePage;
