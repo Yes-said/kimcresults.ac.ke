@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../UserContextProvider";
+
 
 export default function LoginPage() {
     const [identity, setIdentity] = useState("");
@@ -8,13 +10,18 @@ export default function LoginPage() {
     const [role, setRole] = useState("student");
     const navigate = useNavigate();
 
+    const { setUser } = useContext(UserContext);   
+
     async function handleLoginSubmit(ev) {
         ev.preventDefault();
         try {
-            const response = await axios.post("/login", { identity, password, role });
-            if (response.data.success) {
+            const response = await axios.post("/login", { identity, password, role }, { withCredentials: true });
+            const data = response.data;
+    
+            if (data.success) {
+                setUser(data.user);  // Updates context with logged-in user data
                 alert("Login Successful.");
-                navigate("/"); // Redirect to dashboard or another page after login
+                navigate("/");  // Redirect to home
             } else {
                 alert("Invalid credentials.");
             }
@@ -23,6 +30,8 @@ export default function LoginPage() {
             alert("Login failed.");
         }
     }
+    
+    
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-300">
