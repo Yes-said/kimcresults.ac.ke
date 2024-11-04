@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import News from "./News";
-import Dashboard from "./Dashboard";
-
 export default function IndexPage() {
    
 
@@ -15,11 +13,7 @@ export default function IndexPage() {
                 <p className="mt-4 text-lg">Manage your courses, stay updated, and much more</p>
                 {/* Overflow effect */}
                 <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-8 bg-white rounded-t-full shadow-md"></div>
-            </div>
-
-           
-<Dashboard />
-           
+            </div>          
 <div className="flex justify-center gap-4 ">
 {/* Link to About Page */}
 <div className="text-center my-8">
@@ -30,20 +24,13 @@ export default function IndexPage() {
                     Learn More About Us
                     <span className="ml-2 inline-block transition-transform duration-200 transform group-hover:translate-x-1">→</span>
                 </Link>
-            </div>
-
-              
-</div>
-            
-
-
+            </div>            
+</div>           
             {/* News Section */}
             <div className="my-8 px-4">
                 <News />
             </div>
-
-          
-           {/* Contact Information Section */}
+          {/* Contact Information Section */}
 <div className="bg-gray-100 py-8 px-4 text-center mt-8">
     <h2 className="text-xl font-bold mb-4">Contact Us</h2>
     <p className="text-gray-700">For any inquiries, feel free to reach out to us:</p>
