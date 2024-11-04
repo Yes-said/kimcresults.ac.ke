@@ -7,7 +7,7 @@ export default function News() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:4000/news")
+        axios.get("/news")
             .then(response => setNews(response.data))
             .catch(err => setError(err.response?.data || "Failed to fetch news"));
     }, []);
