@@ -23,7 +23,7 @@ import EditTeacher from './pages/EditTeachers.jsx';
 <Route path="/manage-teachers/edit/:id" element={<EditTeacher />} />
 // import ManageResults from './pages/ManageResults.jsx';
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 export default function App() {
